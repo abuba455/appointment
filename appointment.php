@@ -42,3 +42,63 @@ if (!empty($foundAppointments)) {
     echo "No appointments found for $staffMember.\n";
 }
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Appointments</title>
+</head>
+<body>
+    <h1>Clinic Appointments</h1>
+
+    <!-- Form to add an appointment -->
+    <h2>Add an Appointment</h2>
+    <form method="post">
+        <label for="appointmentTime">Appointment Time:</label>
+        <input type="text" id="appointmentTime" name="appointmentTime" required>
+        <br>
+
+        <label for="doctorName">Doctor's Name:</label>
+        <input type="text" id="doctorName" name="doctorName" required>
+        <br>
+
+        <label for="nurseName">Nurse's Name:</label>
+        <input type="text" id="nurseName" name="nurseName" required>
+        <br>
+
+        <button type="submit" name="addAppointment">Add Appointment</button>
+    </form>
+
+    <!-- Form to find appointments by staff -->
+    <h2>Find Appointments by Staff</h2>
+    <form method="post">
+        <label for="staffMember">Staff Member's Name:</label>
+        <input type="text" id="staffMember" name="staffMember" required>
+        <br>
+
+        <button type="submit" name="findAppointments">Find Appointments</button>
+    </form>
+
+    <!-- Display found appointments -->
+    <?php if (isset($foundAppointments)) : ?>
+        <h2>Appointments Found</h2>
+        <?php if (empty($foundAppointments)) : ?>
+            <p>No appointments found for the specified staff member.</p>
+        <?php else : ?>
+            <ul>
+                <?php foreach ($foundAppointments as $time => $appointment) : ?>
+                    <li>
+                        <strong>Time:</strong> <?php echo $time; ?><br>
+                        <strong>Doctors:</strong> <?php echo implode(', ', $appointment['doctors']); ?><br>
+                        <strong>Nurses:</strong> <?php echo implode(', ', $appointment['nurses']); ?><br>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+    <?php endif; ?>
+
+</body>
+</html>
